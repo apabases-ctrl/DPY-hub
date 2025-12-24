@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Source Visualizer - Luxury</title>
+    <title>Dypsy Visualizer - Luxury</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --blue: #00d2ff; --purple: #3a7bd5; --glass: rgba(255, 255, 255, 0.05); }
@@ -40,6 +40,7 @@
         .stat-box b { color: var(--blue); font-size: 1rem; text-shadow: 0 0 10px var(--blue); }
         .stat-box span { font-size: 0.65rem; color: #64748b; text-transform: uppercase; }
 
+        /* PERBAIKAN TOMBOL DAN INPUT */
         .input-wrapper { 
             display: flex; background: rgba(0,0,0,0.6); padding: 6px; 
             border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); gap: 8px;
@@ -53,7 +54,7 @@
             background: linear-gradient(135deg, var(--blue), var(--purple)); 
             border: none; padding: 10px 20px; border-radius: 14px; color: #fff; 
             font-weight: 800; cursor: pointer; font-size: 0.8rem; transition: 0.3s;
-            white-space: nowrap; 
+            white-space: nowrap; /* Mencegah teks turun ke bawah */
         }
         button:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--blue); }
 
@@ -66,17 +67,9 @@
     </style>
 </head>
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 9999; display: flex; align-items: center; gap: 10px;">
-        <img src="URL_LOGO_https_ANDA" style="width: 45px; height: 45px; object-fit: contain; filter: drop-shadow(0 0 10px var(--blue));">
-        <div style="line-height: 1;">
-            <span style="font-weight: 900; color: #fff; letter-spacing: 1px; font-size: 14px;">DYPSY</span><br>
-            <span style="font-size: 8px; color: var(--blue); font-weight: 700;">VISUALIZER</span>
-        </div>
-    </div>
-
     <div class="container">
         <header style="text-align: center; margin-bottom: 30px;">
-            <h1 style="font-size: 2.2rem; font-weight: 900; background: linear-gradient(to right, #fff, var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Visualizer</h1>
+            <h1 style="font-size: 2.2rem; font-weight: 900; background: linear-gradient(to right, #fff, var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Dypsy Visualizer</h1>
         </header>
 
         <div class="main-card">
