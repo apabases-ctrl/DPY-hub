@@ -40,7 +40,6 @@
         .stat-box b { color: var(--blue); font-size: 1rem; text-shadow: 0 0 10px var(--blue); }
         .stat-box span { font-size: 0.65rem; color: #64748b; text-transform: uppercase; }
 
-        /* PERBAIKAN TOMBOL DAN INPUT */
         .input-wrapper { 
             display: flex; background: rgba(0,0,0,0.6); padding: 6px; 
             border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); gap: 8px;
@@ -54,12 +53,23 @@
             background: linear-gradient(135deg, var(--blue), var(--purple)); 
             border: none; padding: 10px 20px; border-radius: 14px; color: #fff; 
             font-weight: 800; cursor: pointer; font-size: 0.8rem; transition: 0.3s;
-            white-space: nowrap; /* Mencegah teks turun ke bawah */
+            white-space: nowrap;
         }
         button:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--blue); }
 
+        /* AREA KODE DENGAN TOMBOL SALIN */
+        .code-container { position: relative; margin-top: 20px; }
+        
+        .btn-copy {
+            position: absolute; top: 10px; right: 10px;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; padding: 5px 12px; border-radius: 8px; font-size: 0.7rem;
+            cursor: pointer; transition: 0.3s; z-index: 10;
+        }
+        .btn-copy:hover { background: var(--blue); border-color: var(--blue); }
+
         .code-view { 
-            margin-top: 20px; background: rgba(0,0,0,0.5); border-radius: 25px; 
+            background: rgba(0,0,0,0.5); border-radius: 25px; 
             padding: 20px; border: 1px solid rgba(255,255,255,0.08); max-height: 300px; 
             overflow: auto; white-space: pre-wrap; word-break: break-all;
             font-family: 'Courier New', monospace; font-size: 0.8rem; color: #94a3b8;
@@ -86,19 +96,46 @@
                 <button onclick="viz()">ANALYZE</button>
             </div>
             
-            <div class="code-view" id="out">// Connect to system...</div>
+            <div class="code-container">
+                <button class="btn-copy" onclick="copyCode()"><i class="fas fa-copy"></i> COPY</button>
+                <div class="code-view" id="out">// Ready to fetch...</div>
+            </div>
         </div>
     </div>
+
     <script>
         async function viz() {
             const u = document.getElementById('target').value;
             if(!u) return;
-            document.getElementById('out').innerText = "Decrypting protocols...";
+            const output = document.getElementById('out');
+            output.innerText = "Decrypting protocols...";
+            
             try {
                 const r = await fetch(`https://api.resellergaming.my.id/tools/getcode?url=${encodeURIComponent(u)}`);
                 const d = await r.json();
-                document.getElementById('out').innerText = d.result.html || "Empty data.";
-            } catch(e) { document.getElementById('out').innerText = "Error Handshake."; }
+                // Menggunakan innerText agar tag HTML tidak dieksekusi browser tapi muncul sebagai teks
+                output.innerText = d.result.html || "Empty data.";
+            } catch(e) { 
+                output.innerText = "Error Handshake. Pastikan URL benar atau API aktif."; 
+            }
+        }
+
+        function copyCode() {
+            const codeText = document.getElementById('out').innerText;
+            if (codeText === "// Ready to fetch..." || codeText === "Decrypting protocols...") return;
+
+            navigator.clipboard.writeText(codeText).then(() => {
+                const btn = document.querySelector('.btn-copy');
+                btn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
+                btn.style.background = "#10b981";
+                
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-copy"></i> COPY';
+                    btn.style.background = "rgba(255,255,255,0.1)";
+                }, 2000);
+            }).catch(err => {
+                alert("Gagal menyalin: " + err);
+            });
         }
     </script>
 </body>
